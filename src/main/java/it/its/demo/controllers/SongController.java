@@ -2,14 +2,21 @@ package it.its.demo.controllers;
 
 import it.its.demo.models.Song;
 import it.its.demo.services.SongService;
+import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
+@Log4j2
 @RestController
 @RequestMapping("/api/songs") // Endpoint base al plurale, come da buona pratica REST
 public class SongController {
@@ -20,7 +27,10 @@ public class SongController {
     // 1. Endpoint per creare una nuova canzone (POST)
     @PostMapping("/addSong")
     public ResponseEntity<Song> createSong(@RequestBody Song song) {
-        Song createdSong = songService.addSong(song);
+        String requestId = UUID.randomUUID().toString();
+        Instant start = Instant.now();
+        log.info("SongController - started at {}. [RequestID: {}", start, requestId);
+        Song createdSong = songService.addSong(song, requestId);
         return ResponseEntity.ok(createdSong);
     }
 
@@ -29,27 +39,6 @@ public class SongController {
         List<Song> songs = songService.findAllSongs();
         return ResponseEntity.ok(songs);
     }
-/* 
-    @PostMapping("/uploadSong")
-    public ResponseEntity<Song> uploadSong(@RequestParam String title,
-                                           @RequestParam String artist,
-                                           @RequestParam String genre,
-                                           @RequestParam int duration,
-                                           @RequestParam int publishingYear,
-                                           @RequestParam MultipartFile audioFile,
-                                           @RequestParam MultipartFile coverImage)
-                                            throws IOException {
-        Song song = new Song();
-        song.setTitle(title);
-        song.setArtist(artist);
-        song.setGenre(genre);
-        song.setDuration(duration);
-        song.setPublishingYear(publishingYear);
-        song.setAudioFile(audioFile.getBytes());
-        song.setCoverImage(coverImage.getBytes());
-        Song createdSong = songService.addSong(song);
-        return ResponseEntity.ok(createdSong);
-    }*/
 
     @GetMapping("/findSongById/{id}")
     public ResponseEntity<Song> findSongById(@PathVariable int id) {
