@@ -20,7 +20,7 @@ private SongRepository songRepository;
 
 public Song addSong(Song song, String requestId){
     Instant start = Instant.now();
-    log.info("SongService - started at " + start + "[RequestID: {}", requestId);
+    log.info("SongService - started at {}. [RequestID: {}", start, requestId);
 
     try {
         boolean isFound = songRepository.existsByTitleAndArtistAndDurationAndPublishingYearAndGenreAllIgnoreCase(
@@ -37,7 +37,7 @@ public Song addSong(Song song, String requestId){
         song.setActive(true);
         Instant end = Instant.now();
         long executionTime = Duration.between(start, end).toMillis();
-        log.info("SongService - finished in " + executionTime + " milliseconds. [RequestID: {}", requestId);
+        log.info("SongService - finished in {} milliseconds. [RequestID: {}", executionTime, requestId);
 
         return songRepository.save(song);
     }   catch (IllegalArgumentException e){

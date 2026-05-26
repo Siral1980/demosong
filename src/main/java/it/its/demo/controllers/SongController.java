@@ -29,7 +29,7 @@ public class SongController {
     public ResponseEntity<Song> createSong(@RequestBody Song song) {
         String requestId = UUID.randomUUID().toString();
         Instant start = Instant.now();
-        log.info("SongController - started at " + start + "[RequestID: {}", requestId);
+        log.info("SongController - started at {}. [RequestID: {}", start, requestId);
         Song createdSong = songService.addSong(song, requestId);
         return ResponseEntity.ok(createdSong);
     }
@@ -39,27 +39,6 @@ public class SongController {
         List<Song> songs = songService.findAllSongs();
         return ResponseEntity.ok(songs);
     }
-/* 
-    @PostMapping("/uploadSong")
-    public ResponseEntity<Song> uploadSong(@RequestParam String title,
-                                           @RequestParam String artist,
-                                           @RequestParam String genre,
-                                           @RequestParam int duration,
-                                           @RequestParam int publishingYear,
-                                           @RequestParam MultipartFile audioFile,
-                                           @RequestParam MultipartFile coverImage)
-                                            throws IOException {
-        Song song = new Song();
-        song.setTitle(title);
-        song.setArtist(artist);
-        song.setGenre(genre);
-        song.setDuration(duration);
-        song.setPublishingYear(publishingYear);
-        song.setAudioFile(audioFile.getBytes());
-        song.setCoverImage(coverImage.getBytes());
-        Song createdSong = songService.addSong(song);
-        return ResponseEntity.ok(createdSong);
-    }*/
 
     @GetMapping("/findSongById/{id}")
     public ResponseEntity<Song> findSongById(@PathVariable int id) {
