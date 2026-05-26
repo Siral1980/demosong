@@ -1,1 +1,1 @@
-Ciao sono Michael Jackson
+Ciao sono Daniela , Vanessa , Valentina .
