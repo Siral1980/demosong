@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +28,8 @@ public class SongController {
     @PostMapping("/addSong")
     public ResponseEntity<Song> createSong(@RequestBody Song song) {
         String requestId = UUID.randomUUID().toString();
-        log.info("SongController - started at " + LocalDateTime.now() + "[RequestID: {}", requestId);
+        Instant start = Instant.now();
+        log.info("SongController - started at " + start + "[RequestID: {}", requestId);
         Song createdSong = songService.addSong(song, requestId);
         return ResponseEntity.ok(createdSong);
     }

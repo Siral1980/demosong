@@ -7,7 +7,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 @Log4j2
@@ -18,7 +19,8 @@ public class SongService {
 private SongRepository songRepository;
 
 public Song addSong(Song song, String requestId){
-    log.info("SongService - started at " + LocalDateTime.now() + "[RequestID: {}", requestId);
+    Instant start = Instant.now();
+    log.info("SongService - started at " + start + "[RequestID: {}", requestId);
 
     try {
         boolean isFound = songRepository.existsByTitleAndArtistAndDurationAndPublishingYearAndGenreAllIgnoreCase(
@@ -33,7 +35,9 @@ public Song addSong(Song song, String requestId){
             throw new IllegalArgumentException("Error: song " + song.getTitle().toUpperCase() + " already exists");
         }
         song.setActive(true);
-        log.info("SongService - finished at " + LocalDateTime.now() + "[RequestID: {}", requestId);
+        Instant end = Instant.now();
+        long executionTime = Duration.between(start, end).toMillis();
+        log.info("SongService - finished in " + executionTime + " milliseconds. [RequestID: {}", requestId);
 
         return songRepository.save(song);
     }   catch (IllegalArgumentException e){
