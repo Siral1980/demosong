@@ -2,14 +2,20 @@ package it.its.demo.controllers;
 
 import it.its.demo.models.Song;
 import it.its.demo.services.SongService;
+import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
+@Log4j2
 @RestController
 @RequestMapping("/api/songs") // Endpoint base al plurale, come da buona pratica REST
 public class SongController {
@@ -20,7 +26,9 @@ public class SongController {
     // 1. Endpoint per creare una nuova canzone (POST)
     @PostMapping("/addSong")
     public ResponseEntity<Song> createSong(@RequestBody Song song) {
-        Song createdSong = songService.addSong(song);
+        String requestId = UUID.randomUUID().toString();
+        log.info("SongController - started at " + LocalDateTime.now() + "[RequestID: {}", requestId);
+        Song createdSong = songService.addSong(song, requestId);
         return ResponseEntity.ok(createdSong);
     }
 
