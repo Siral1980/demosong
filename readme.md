@@ -1,1 +1,1 @@
-Ciao sono Daniela , Vanessa , Valentina .
+Ciao sono Daniela , Vanessa , Valentina . Picchiarallo
