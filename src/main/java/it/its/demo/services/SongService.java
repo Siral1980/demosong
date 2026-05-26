@@ -3,18 +3,25 @@ package it.its.demo.services;
 import it.its.demo.exceptions.ResourceNotFoundException;
 import it.its.demo.models.Song;
 import it.its.demo.repositories.SongRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
+@Log4j2
 @Service
 public class SongService {
 
 @Autowired
 private SongRepository songRepository;
 
-public Song addSong(Song song){
+public Song addSong(Song song, String requestId){
+    Instant start = Instant.now();
+    log.info("SongService - started at {}. [RequestID: {}", start, requestId);
+
     try {
         boolean isFound = songRepository.existsByTitleAndArtistAndDurationAndPublishingYearAndGenreAllIgnoreCase(
                 song.getTitle(),
@@ -28,11 +35,16 @@ public Song addSong(Song song){
             throw new IllegalArgumentException("Error: song " + song.getTitle().toUpperCase() + " already exists");
         }
         song.setActive(true);
+        Instant end = Instant.now();
+        long executionTime = Duration.between(start, end).toMillis();
+        log.info("SongService - finished in {} milliseconds. [RequestID: {}", executionTime, requestId);
+
         return songRepository.save(song);
     }   catch (IllegalArgumentException e){
-            System.err.println("Duplication try blocked: " + e.getMessage());
+            log.error("Duplication try blocked: {}, [RequestId]: {}", e.getMessage(), requestId);
             throw e;
         }
+
 }
 
 

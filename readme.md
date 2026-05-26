@@ -1,3 +1,6 @@
-Ciao sono tonia e ho problemi con git
+<details>
+  <summary>🔍 Clicca qui per vedere la soluzione dell'esercizio</summary>
 
-Non ti preoccupare li risolveremo (forse)
+Ecco il codice corretto:
+```javascript
+  console.log("Bravo!");
