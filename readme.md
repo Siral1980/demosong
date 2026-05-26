@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
  ef vgrftvrwefsxd c
 =======
 <details>
@@ -8,3 +9,6 @@ Ecco il codice corretto:
 ```javascript
   console.log("Bravo!");
 >>>>>>> origin/gdeluca
+=======
+ciao sono comunista
+>>>>>>> cea15eb6bd7484ee1eb14375490f5d9c361e290b
