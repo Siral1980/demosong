@@ -1,1 +1,1 @@
-Ciao sono Michael jackson da p
+Ciao sono un trimone di merda
