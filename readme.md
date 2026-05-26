@@ -1,3 +1,6 @@
-Ciao sono Io, proprio io, ti giuro
+<details>
+  <summary>🔍 Clicca qui per vedere la soluzione dell'esercizio</summary>
 
-ma chi credi di essere?
+Ecco il codice corretto:
+```javascript
+  console.log("Bravo!");
