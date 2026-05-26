@@ -1,1 +1,1 @@
-Ciao sono un trimone di merda
+Ciao sono uno studente
